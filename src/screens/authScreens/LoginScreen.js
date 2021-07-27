@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
+
+import { AuthContext } from '../../context/authContext'
 
 import { colors } from '../../theme/color'
 
 export default function LoginScreen({ navigation }) {
+
+    const { auth } = useContext(AuthContext)
+
     return (
         <View style={styles.container}>
             <Image
@@ -13,7 +18,7 @@ export default function LoginScreen({ navigation }) {
             <TextInput autoCapitalize={'none'} autoCorrect={false} keyboardType='default' style={styles.textInput} placeholder='Логин' />
             <TextInput autoCapitalize={'none'} autoCorrect={false} secureTextEntry={true} keyboardType='default' style={styles.textInput} placeholder='Пароль' />
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.buttonTouch}>
+                <TouchableOpacity onPress={() => {auth(true)}} style={styles.buttonTouch}>
                     <Text style={styles.buttonText}>Войти</Text>
                 </TouchableOpacity>
             </View>

@@ -3,5 +3,5 @@ export const colors = {
     SECOND_COLOR: '#FFFFFF',
     BACKGROUND_COLOR: '#E8F0F2',
     BORDER_COLOR: '#DBDBDB', 
-    TEXT_COLOR: '#73a3ba'
+    ICON_COLOR: '#053742'
 }
