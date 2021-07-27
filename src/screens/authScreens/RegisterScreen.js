@@ -1,11 +1,17 @@
 import React from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
+import { Feather } from '@expo/vector-icons'
 
 import { colors } from '../../theme/color'
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
     return (
         <View style={styles.container}>
+            <TouchableOpacity onPress={() => {
+                navigation.goBack()
+            }} style={styles.backButton}>
+                <Feather name="arrow-left" size={26} color="black" />
+            </TouchableOpacity>
             <Image
                 source={ require('../../img/new-logo-shadow.png') } 
                 style={styles.logo}
@@ -63,5 +69,17 @@ const styles = StyleSheet.create({
         color: colors.SECOND_COLOR,
         fontSize: 15,
         fontWeight: '600'
+    },
+    backButton: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        width: 50,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        backgroundColor: colors.SECOND_COLOR,
+        elevation: 5,
     }
 })
