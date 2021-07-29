@@ -1,102 +1,134 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView} from 'react-native'
+import TabBar from '../../components/TabBar'
 import AppLoading from 'expo-app-loading'
 import { 
-    useFonts, 
-    Roboto_100Thin,
-    Roboto_100Thin_Italic,
-    Roboto_300Light,
-    Roboto_300Light_Italic,
-    Roboto_400Regular,
-    Roboto_400Regular_Italic,
-    Roboto_500Medium,
-    Roboto_500Medium_Italic,
-    Roboto_700Bold,
-    Roboto_700Bold_Italic,
-    Roboto_900Black,
-    Roboto_900Black_Italic 
-} from '@expo-google-fonts/roboto'
-import { Feather } from '@expo/vector-icons'
+    useFonts,
+    Nunito_200ExtraLight,
+    Nunito_200ExtraLight_Italic,
+    Nunito_300Light,
+    Nunito_300Light_Italic,
+    Nunito_400Regular,
+    Nunito_400Regular_Italic,
+    Nunito_600SemiBold,
+    Nunito_600SemiBold_Italic,
+    Nunito_700Bold,
+    Nunito_700Bold_Italic,
+    Nunito_800ExtraBold,
+    Nunito_800ExtraBold_Italic,
+    Nunito_900Black,
+    Nunito_900Black_Italic 
+} from '@expo-google-fonts/nunito'
+
+import ProductCard from '../../components/ProductCard'
 
 import { colors } from '../../theme/color'
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
 
     let [fontsLoaded] = useFonts({
-        Roboto_100Thin,
-        Roboto_100Thin_Italic,
-        Roboto_300Light,
-        Roboto_300Light_Italic,
-        Roboto_400Regular,
-        Roboto_400Regular_Italic,
-        Roboto_500Medium,
-        Roboto_500Medium_Italic,
-        Roboto_700Bold,
-        Roboto_700Bold_Italic,
-        Roboto_900Black,
-        Roboto_900Black_Italic 
+        Nunito_200ExtraLight,
+        Nunito_200ExtraLight_Italic,
+        Nunito_300Light,
+        Nunito_300Light_Italic,
+        Nunito_400Regular,
+        Nunito_400Regular_Italic,
+        Nunito_600SemiBold,
+        Nunito_600SemiBold_Italic,
+        Nunito_700Bold,
+        Nunito_700Bold_Italic,
+        Nunito_800ExtraBold,
+        Nunito_800ExtraBold_Italic,
+        Nunito_900Black,
+        Nunito_900Black_Italic 
     })
 
-    if (!fontsLoaded) {
+    if(!fontsLoaded) {
         return <AppLoading />
     } else {
         return (
             <View style={styles.container}>
-                <View style={styles.profileContainer}>
-                    <View style={styles.userContainer}>
-                        <Text style={styles.welocmeText}>Добро пожаловать!</Text>
-                        <Text style={styles.userNameText}>Георгий</Text>
+                <ImageBackground style={styles.containerBackgroundImage} source={ require( '../../img/background-image-second.jpg' ) } >
+                    <TabBar />
+                    <ScrollView style={{ paddingBottom: 25 }} showsHorizontalScrollIndicator={false}>
+                    <View style={styles.contentContainer}>
+                        <Text style={styles.sloganText}>Материалы для форм</Text>
+                        <View style={styles.containerMenu}>
+                            <TouchableOpacity style={styles.menuButton}>
+                                <Text style={styles.menuButtonText}>Силиконы</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.menuButton,  { borderBottomWidth: 0 }]}>
+                                <Text style={[styles.menuButtonText, {color: colors.BACKGROUND_COLOR}]}>Гипс</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.menuButton, { borderBottomWidth: 0 }]}>
+                                <Text style={[styles.menuButtonText, {color: colors.BACKGROUND_COLOR}]}>Формы</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={styles.messengerContainer}>
-                        <TouchableOpacity style={styles.messengerButton}>
-                            <Feather name="message-circle" size={26} color="black" />
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                    
+                        <View style={styles.productContainer}>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                <ProductCard name='Super Mold' cost={35} image={ {uri: 'https://crimea-soap.ru/images/cms/thumbs/5ea04cc151ac4cf20679e476db6a55c2f7da87f9/img_7885_auto_auto.jpg'} } />
+                                <ProductCard name='Rebound 25' cost={60} image={ {uri: 'https://images.by.prom.st/197156058_w600_h600_197156058.jpg'} } />
+                                <ProductCard name='Mold Star 16' cost={75} image={ {uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYGnntMG78QB4xZw1gZukd0zE2ZFUU0wRUPg&usqp=CAU'} } />
+                                <ProductCard name='Platinum' cost={50} image={ {uri: 'https://lh3.googleusercontent.com/proxy/4R8DxzNn_c5yziwBUnAAiSKMnn9_lliekQSUa6vmTyh2MUjlG0w9z6o1lgdEtkEv1j54uQpyNKtOdGanR4W_W8IEKQXmzuJB3GVSwHcbQOyusjf9cpYr4po0HA'} } />
+                            </ScrollView>
+                        </View>
+                        <View style={styles.contentContainer}>
+                            <Text style={[styles.sloganText, { color: colors.TEXT_COLOR, fontSize: 23, marginBottom: '0%' }]}>Лучший выбор</Text>
+                        </View>
+                        <View style={[styles.productContainer, {marginVertical: 25}]}>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                <ProductCard type='mini' name='Mold Star 16' cost={75} image={ {uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYGnntMG78QB4xZw1gZukd0zE2ZFUU0wRUPg&usqp=CAU'} } />
+                                <ProductCard type='mini' name='Rebound 25' cost={60} image={ {uri: 'https://images.by.prom.st/197156058_w600_h600_197156058.jpg'} } />
+                            </ScrollView>
+                        </View>
+                    </ScrollView>
+                </ImageBackground>
             </View>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.SECOND_COLOR,
+        
     },
-    profileContainer: {
-        width: '100%',
-        height: '17%',
+    containerBackgroundImage: {
+        flex: 1,
+    },
+    contentContainer: {
+        width: '85%',
+        alignSelf: 'center',
+    },
+    sloganText: {
+        marginTop: '2%',
+        marginBottom: '5%',
+        color: colors.SECOND_COLOR,
+        fontSize: 25,
+        fontFamily: 'Nunito_800ExtraBold',
+    },
+    containerMenu: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: '10%',
-        backgroundColor: colors.MAIN_COLOR,
-        borderBottomLeftRadius: 25,
-        borderBottomRightRadius: 25,
-        elevation: 5,
     },
-    userContainer: {
-        top: 12,
-    },
-    messengerButton: {
-        width: 40,
-        height: 40,
-        top: 12,
+    menuButton: {
+        height: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
-        backgroundColor: colors.SECOND_COLOR,
-        elevation: 5,
+        marginRight: 20,
+        borderBottomColor: colors.SECOND_COLOR,
+        borderBottomWidth: 2,
+        borderBottomStartRadius: 10,
+        borderBottomEndRadius: 10,
     },
-    welocmeText: {
-        fontSize: 14,
-        fontFamily: 'Roboto_400Regular',
+    menuButtonText: {
         color: colors.SECOND_COLOR,
+        fontSize: 17,
+        fontFamily: 'Nunito_700Bold',
     },
-    userNameText: {
-        fontFamily: 'Roboto_700Bold',
-        marginTop: -2,
-        fontSize: 22,
-        color: colors.SECOND_COLOR,
+    productContainer: {
+        marginVertical: 20,
     }
-})  
+})
