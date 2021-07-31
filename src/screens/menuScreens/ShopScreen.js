@@ -1,62 +1,69 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native'
+import React from 'react'
+import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native'
+import TabBar from '../../components/TabBar'
 import AppLoading from 'expo-app-loading'
 import { 
-    useFonts, 
-    Roboto_100Thin,
-    Roboto_100Thin_Italic,
-    Roboto_300Light,
-    Roboto_300Light_Italic,
-    Roboto_400Regular,
-    Roboto_400Regular_Italic,
-    Roboto_500Medium,
-    Roboto_500Medium_Italic,
-    Roboto_700Bold,
-    Roboto_700Bold_Italic,
-    Roboto_900Black,
-    Roboto_900Black_Italic 
-} from '@expo-google-fonts/roboto'
-import { Feather } from '@expo/vector-icons'
+    useFonts,
+    Nunito_200ExtraLight,
+    Nunito_200ExtraLight_Italic,
+    Nunito_300Light,
+    Nunito_300Light_Italic,
+    Nunito_400Regular,
+    Nunito_400Regular_Italic,
+    Nunito_600SemiBold,
+    Nunito_600SemiBold_Italic,
+    Nunito_700Bold,
+    Nunito_700Bold_Italic,
+    Nunito_800ExtraBold,
+    Nunito_800ExtraBold_Italic,
+    Nunito_900Black,
+    Nunito_900Black_Italic 
+} from '@expo-google-fonts/nunito'
 
-import ProductCard from '../../components/ProductCard'
+import CategoryCard from '../../components/CategoryCard'
 
 import { colors } from '../../theme/color'
 
-export default function ShopScreen() {
+export default function ShopScreen({ navigation }) {
 
     let [fontsLoaded] = useFonts({
-        Roboto_100Thin,
-        Roboto_100Thin_Italic,
-        Roboto_300Light,
-        Roboto_300Light_Italic,
-        Roboto_400Regular,
-        Roboto_400Regular_Italic,
-        Roboto_500Medium,
-        Roboto_500Medium_Italic,
-        Roboto_700Bold,
-        Roboto_700Bold_Italic,
-        Roboto_900Black,
-        Roboto_900Black_Italic 
+        Nunito_200ExtraLight,
+        Nunito_200ExtraLight_Italic,
+        Nunito_300Light,
+        Nunito_300Light_Italic,
+        Nunito_400Regular,
+        Nunito_400Regular_Italic,
+        Nunito_600SemiBold,
+        Nunito_600SemiBold_Italic,
+        Nunito_700Bold,
+        Nunito_700Bold_Italic,
+        Nunito_800ExtraBold,
+        Nunito_800ExtraBold_Italic,
+        Nunito_900Black,
+        Nunito_900Black_Italic 
     })
 
-    if (!fontsLoaded) {
+    if(!fontsLoaded) {
         return <AppLoading />
     } else {
         return (
             <View style={styles.container}>
-                <View style={styles.profileContainer}>
-                    <Image style={styles.logoImage} source={ require( '../../img/white-logo.png' ) } />
-                    <View style={styles.messengerContainer}>
-                        <TouchableOpacity style={styles.messengerButton}>
-                            <Feather name="message-circle" size={26} color="black" />
-                        </TouchableOpacity>
+                <ImageBackground style={styles.containerBackgroundImage} source={ require( '../../img/background-image-second.jpg' ) } >
+                    <TabBar navigation={ navigation } />
+                    <View style={styles.containerContent}>
+                        <ScrollView style={styles.containerScroll}>
+                            <Text style={styles.titleText}>Категории</Text>
+                            <CategoryCard name='Силиконы' />
+                            <CategoryCard name='Гипс' />
+                            <CategoryCard name='Формы' />
+                            <CategoryCard name='Кисти' />
+                            <CategoryCard name='Краски' />
+                            <CategoryCard name='Разделительные смазки' />
+                            <CategoryCard name='Полимерная глина' />
+                            <CategoryCard name='Мыловарение' />
+                        </ScrollView>
                     </View>
-                </View>
-                <View style={styles.contentContainer}>
-                    <ScrollView style={styles.scrollContainer} >
-                        <ProductCard />
-                    </ScrollView>
-                </View>
+                </ImageBackground>
             </View>
         )
     }
@@ -65,44 +72,22 @@ export default function ShopScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.SECOND_COLOR,
     },
-    profileContainer: {
+    containerBackgroundImage: {
+        flex: 1,
+    },
+    containerContent: {
         width: '100%',
-        height: '17%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: '10%',
-        backgroundColor: colors.MAIN_COLOR,
-        borderBottomLeftRadius: 25,
-        borderBottomRightRadius: 25,
-        elevation: 5,
     },
-    userContainer: {
-        top: 12,
-    },
-    messengerButton: {
-        width: 40,
-        height: 40,
-        top: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        backgroundColor: colors.SECOND_COLOR,
-        elevation: 5,
-    },
-    logoImage: {
-        right: 15,
-        top: 11,
-        width: 90,
-        height: 90,
-    },
-    contentContainer: {
+    containerScroll: {
         width: '100%',
-        paddingVertical: 25,
+        marginBottom: 120,
     },
-    scrollContainer: {
-        width: '100%',
+    titleText: {
+        alignSelf: 'center',
+        fontSize: 25,
+        fontFamily: 'Nunito_800ExtraBold',
+        color: colors.SECOND_COLOR,
+        marginVertical: 10,
     }
-})  
+})

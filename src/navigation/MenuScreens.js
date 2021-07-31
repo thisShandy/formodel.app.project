@@ -24,6 +24,7 @@ export default function MenuScreens() {
                     borderTopWidth: 0,
                     height: '10%',
                     elevation: 0,
+                    backgroundColor: colors.SECOND_COLOR
                 }
             }}
         >

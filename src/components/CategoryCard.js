@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, ImageBackground } from 'react-native'
-import TabBar from '../../components/TabBar'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import AppLoading from 'expo-app-loading'
 import { 
     useFonts,
@@ -20,9 +19,9 @@ import {
     Nunito_900Black_Italic 
 } from '@expo-google-fonts/nunito'
 
-import { colors } from '../../theme/color'
+import { colors } from '../theme/color'
 
-export default function ShopScreen({ navigation }) {
+export default function CategoryCard({ name='Продукция' }) {
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -45,20 +44,28 @@ export default function ShopScreen({ navigation }) {
         return <AppLoading />
     } else {
         return (
-            <View style={styles.container}>
-                <ImageBackground style={styles.containerBackgroundImage} source={ require( '../../img/background-image-second.jpg' ) } >
-                    <TabBar navigation={ navigation } />
-                </ImageBackground>
-            </View>
+            <TouchableOpacity style={styles.container}>
+                <Text style={styles.textTitle}>{ name }</Text>
+            </TouchableOpacity>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: 220,
+        height: 50,
+        backgroundColor: colors.BACK_COLOR,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginVertical: 35/2,
+        borderRadius: 15,
+        elevation: 5,
     },
-    containerBackgroundImage: {
-        flex: 1,
-    },
+    textTitle: {
+        color: colors.SECOND_COLOR,
+        fontFamily: 'Nunito_600SemiBold',
+        fontSize: 16,
+    }
 })

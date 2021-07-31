@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
     },
     containerMini: {
         width: 160,
-        height: 130,
+        height: 150,
         alignSelf: 'center',
         backgroundColor: colors.BACK_COLOR,
-        borderRadius: 25,
+        borderRadius: 20,
         marginHorizontal: 25,
         marginVertical: 10,
         elevation: 5,
@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
     },
     productImageMini: {
         alignSelf: 'flex-end',
-        width: 70,
-        height: 70,
+        width: 80,
+        height: 80,
         marginRight: 20,
         marginTop: 12,
         borderRadius: 10,
@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     textContainerMini: {
-        flexDirection: 'row',
-        top: '8%',
+        top: '5%',
+        left: '10%',
         justifyContent: 'space-around',
     },
     textName: {

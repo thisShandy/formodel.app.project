@@ -49,7 +49,7 @@ export default function HomeScreen({ navigation }) {
         return (
             <View style={styles.container}>
                 <ImageBackground style={styles.containerBackgroundImage} source={ require( '../../img/background-image-second.jpg' ) } >
-                    <TabBar />
+                    <TabBar navigation={ navigation }  />
                     <ScrollView style={{ paddingBottom: 25 }} showsHorizontalScrollIndicator={false}>
                     <View style={styles.contentContainer}>
                         <Text style={styles.sloganText}>Материалы для форм</Text>
@@ -94,7 +94,6 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        
     },
     containerBackgroundImage: {
         flex: 1,

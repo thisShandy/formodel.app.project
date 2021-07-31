@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 
 import { colors } from '../theme/color'
 
-export default function TabBar() {
+export default function TabBar({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.containerConten}>
@@ -14,7 +14,9 @@ export default function TabBar() {
 
                 <View style={styles.containerIcon}>
 
-                    <TouchableOpacity style={styles.tabBarButton} >
+                    <TouchableOpacity onPress={() => { 
+                        navigation.navigate('Search')
+                    }} style={styles.tabBarButton} >
                         <Ionicons name="search" size={26} color={colors.SECOND_COLOR} />
                     </TouchableOpacity>
 
@@ -31,7 +33,7 @@ export default function TabBar() {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: 120,
+        height: 110,
     },
     containerConten: {
         top: 35,
