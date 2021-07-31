@@ -13,7 +13,7 @@ export default function TabBar({ navigation }) {
                 <Image style={styles.logoImage} source={ require( '../img/white-logo.png') } />
 
                 <View style={styles.containerIcon}>
-
+                
                     <TouchableOpacity onPress={() => { 
                         navigation.navigate('Search')
                     }} style={styles.tabBarButton} >

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { 
     useFonts,
     Nunito_200ExtraLight,
@@ -44,7 +44,7 @@ export default function ProductCard({ type='default', name='Product', cost=10, i
         return <AppLoading />
     } else {
         return (
-            <TouchableHighlight>
+            <TouchableOpacity>
                 <View style={ type != 'mini' ? styles.container : styles.containerMini }>
                     <Image style={ type != 'mini' ? styles.productImage : styles.productImageMini } source={ image } />
                     <View style={ type != 'mini' ? styles.textContainer : styles.textContainerMini }>
@@ -52,7 +52,7 @@ export default function ProductCard({ type='default', name='Product', cost=10, i
                         <Text style={ type != 'mini' ? styles.textCost : styles.textCostMini} >{cost}р</Text>
                     </View>   
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     }
 

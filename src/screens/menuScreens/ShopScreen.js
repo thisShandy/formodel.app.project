@@ -51,7 +51,7 @@ export default function ShopScreen({ navigation }) {
                 <ImageBackground style={styles.containerBackgroundImage} source={ require( '../../img/background-image-second.jpg' ) } >
                     <TabBar navigation={ navigation } />
                     <View style={styles.containerContent}>
-                        <ScrollView style={styles.containerScroll}>
+                        <ScrollView showsVerticalScrollIndicator={false} style={styles.containerScroll}>
                             <Text style={styles.titleText}>Категории</Text>
                             <CategoryCard name='Силиконы' />
                             <CategoryCard name='Гипс' />
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
     containerScroll: {
         width: '100%',
-        marginBottom: 120,
+        marginBottom: 110,
     },
     titleText: {
         alignSelf: 'center',
