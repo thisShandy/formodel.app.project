@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     },
     containerContent: {
         width: '100%',
+        
     },
     searchResultTitle: {
         fontSize: 20,
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     },
     containerScroll: {
         width: '100%',
-        marginTop: 10,
-        marginBottom: 185,
+        paddingVertical: 10,
+        marginBottom: 195,
     },
 })

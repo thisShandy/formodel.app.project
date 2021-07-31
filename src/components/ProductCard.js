@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.BACK_COLOR,
         borderRadius: 25,
         marginHorizontal: 25,
-        marginVertical: 10,
+        marginBottom: 20,
         elevation: 5,
     },
     containerMini: {

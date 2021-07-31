@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native'
 import TabBar from '../../components/TabBar'
 import AppLoading from 'expo-app-loading'
 import { 
@@ -19,6 +19,8 @@ import {
     Nunito_900Black,
     Nunito_900Black_Italic 
 } from '@expo-google-fonts/nunito'
+
+import MessageBar from '../../components/MessageBar'
 
 import { colors } from '../../theme/color'
 
@@ -48,6 +50,12 @@ export default function ShopScreen({ navigation }) {
             <View style={styles.container}>
                 <ImageBackground style={styles.containerBackgroundImage} source={ require( '../../img/background-image-second.jpg' ) } >
                     <TabBar navigation={ navigation } />
+                    <View style={styles.chatContainer}>
+                        <MessageBar />
+                        <ScrollView style={styles.chatContainerScroll}>
+
+                        </ScrollView>
+                    </View>
                 </ImageBackground>
             </View>
         )
@@ -61,4 +69,8 @@ const styles = StyleSheet.create({
     containerBackgroundImage: {
         flex: 1,
     },
+    chatContainer: {
+        flex: 1,
+        flexDirection: 'column-reverse'
+    }
 })
