@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import AppLoading from 'expo-app-loading'
 import { 
     useFonts,
@@ -22,7 +22,7 @@ import { Feather } from '@expo/vector-icons'
 
 import { colors } from '../theme/color'
 
-export default function MessageBar() {
+export default function MessageBar({ type='user', text }) {
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -45,41 +45,40 @@ export default function MessageBar() {
         return <AppLoading />
     } else {
         return (
-            <View style={styles.container}>
-                <TextInput style={styles.messageInput} autoCapitalize={'none'} autoCorrect={false} keyboardType='default' placeholder='Задайте ваш вопрос...' />
-                <TouchableOpacity style={styles.messageSendButton}>
-                    <Feather style={{ right: 2, top: 2 }} name="navigation" size={24} color={colors.SECOND_COLOR} />
-                </TouchableOpacity>
+            <View style={ type === 'user' ? styles.containerUser : styles.containerAdmin }>
+                <Text style={styles.messageText}>{ text }</Text>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: '90%',
-        height: 50,
-        backgroundColor: colors.MAIN_COLOR,
+    containerUser: {
+        width: '50%',
+        backgroundColor: colors.SECOND_COLOR,
         flexDirection: 'row',
         borderRadius: 15,
         elevation: 5,
         marginBottom: 10,
-        alignSelf: 'center'
+        marginHorizontal: 5,
+        elevation: 5,
+        alignSelf: 'flex-end'
     },
-    messageInput: {
-        width: '80%',
-        paddingHorizontal: 10,
-        borderRadius: 15,
+    containerAdmin: {
+        width: '50%',
         backgroundColor: colors.SECOND_COLOR,
+        flexDirection: 'row',
+        borderRadius: 15,
+        elevation: 5,
+        marginBottom: 10,
+        elevation: 5,
+        alignSelf: 'flex-start'
+    },
+    messageText: {
+        paddingVertical: 15,
+        paddingHorizontal: 20,
         fontSize: 15,
         fontFamily: 'Nunito_400Regular',
-    },
-    messageSendButton: {
-        width: '20%',
-        backgroundColor: colors.MAIN_COLOR,
-        borderBottomEndRadius: 15,
-        borderTopEndRadius: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
+        color: colors.TEXT_COLOR,
     }
 })

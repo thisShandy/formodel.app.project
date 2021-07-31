@@ -1,7 +1,7 @@
 export const colors = {
     MAIN_COLOR: '#69CBF5',
     SECOND_COLOR: '#FFFFFF',
-    BACKGROUND_COLOR: '#E8F0F2',
+    BACKGROUND_COLOR: '#f7faf9',
     BORDER_COLOR: '#DBDBDB', 
     ICON_COLOR: '#053742',
     TEXT_COLOR: '#17242B',
