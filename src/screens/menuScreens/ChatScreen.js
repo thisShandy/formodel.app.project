@@ -25,7 +25,7 @@ import MessageUser from '../../components/MessageUser'
 
 import { colors } from '../../theme/color'
 
-export default function ShopScreen({ navigation }) {
+export default function ChatScreen({ navigation }) {
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,

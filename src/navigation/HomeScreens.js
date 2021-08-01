@@ -3,8 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import MenuScreens from './MenuScreens'
 
-import LoginScreen from '../screens/authScreens/LoginScreen'
-import RegisterScreen from '../screens/authScreens/RegisterScreen'
+import CartScreen from '../screens/secondaryScreens/CartScreen'
 
 const Stack = createStackNavigator()
 
@@ -14,6 +13,7 @@ export default function ScreensContainer() {
             headerMode='none'
         >
             <Stack.Screen name='Menu' component={MenuScreens} />
+            <Stack.Screen name='Cart' component={CartScreen} />
         </Stack.Navigator>
     )
 }

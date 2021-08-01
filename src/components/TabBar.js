@@ -20,7 +20,9 @@ export default function TabBar({ navigation }) {
                         <Ionicons name="search" size={26} color={colors.SECOND_COLOR} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.tabBarButton} >
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('Cart')
+                    }} style={styles.tabBarButton} >
                         <Feather name="shopping-cart" size={26} color={colors.SECOND_COLOR} />
                     </TouchableOpacity>
 

@@ -18,7 +18,7 @@ import {
     Nunito_900Black,
     Nunito_900Black_Italic 
 } from '@expo-google-fonts/nunito'
-import { Feather } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 
 import { colors } from '../theme/color'
 
@@ -48,7 +48,7 @@ export default function MessageBar() {
             <View style={styles.container}>
                 <TextInput style={styles.messageInput} autoCapitalize={'none'} autoCorrect={false} keyboardType='default' placeholder='Задайте ваш вопрос...' />
                 <TouchableOpacity style={styles.messageSendButton}>
-                    <Feather style={{ right: 2, top: 2 }} name="navigation" size={24} color={colors.SECOND_COLOR} />
+                    <Ionicons style={{ right: 2, top: 2 }} name="md-paper-plane" size={24} color={colors.SECOND_COLOR} />
                 </TouchableOpacity>
             </View>
         )

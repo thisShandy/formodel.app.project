@@ -24,7 +24,7 @@ import ProductCard from '../../components/ProductCard'
 
 import { colors } from '../../theme/color'
 
-export default function ShopScreen({ navigation }) {
+export default function SearchScreen({ navigation }) {
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
