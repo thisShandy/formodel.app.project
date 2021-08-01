@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 
+import { AuthContext } from '../context/authContext'
+
 import { colors } from '../theme/color'
 
 export default function TabBar({ navigation }) {
+
+    const { store } = useContext(AuthContext)
+
     return (
         <View style={styles.container}>
             <View style={styles.containerConten}>
@@ -21,7 +26,11 @@ export default function TabBar({ navigation }) {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => {
-                        navigation.navigate('Cart')
+                        if (store.getState()) {
+                            navigation.navigate('Cart')
+                        } else {
+                            navigation.navigate('Auth')
+                        }
                     }} style={styles.tabBarButton} >
                         <Feather name="shopping-cart" size={26} color={colors.SECOND_COLOR} />
                     </TouchableOpacity>

@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import AppLoading from 'expo-app-loading'
+import { Feather } from '@expo/vector-icons'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
 import { 
     useFonts, 
@@ -18,6 +19,7 @@ import {
     Nunito_900Black,
     Nunito_900Black_Italic 
 } from '@expo-google-fonts/nunito'
+import { login } from '../../redux/actions'
 
 import { AuthContext } from '../../context/authContext'
 
@@ -42,21 +44,35 @@ export default function LoginScreen({ navigation }) {
         Nunito_900Black_Italic 
     })
 
-    const { auth } = useContext(AuthContext)
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
+
+    const { store } = useContext(AuthContext)
 
     if (!fontsLoaded) {
         return <AppLoading />
     } else {
         return (
             <View style={styles.container}>
+                <TouchableOpacity onPress={() => {
+                    navigation.goBack()
+                }} style={styles.backButton}>
+                    <Feather name="arrow-left" size={26} color={colors.TEXT_COLOR} />
+                </TouchableOpacity>
                 <Image
                     source={ require('../../img/logo-shadow-69CBF5.png') } 
                     style={styles.logo}
                 />
-                <TextInput autoCapitalize={'none'} autoCorrect={false} keyboardType='default' style={styles.textInput} placeholder='Логин' />
-                <TextInput autoCapitalize={'none'} autoCorrect={false} secureTextEntry={true} keyboardType='default' style={styles.textInput} placeholder='Пароль' />
+                <TextInput onChangeText={(value) => {
+                    setEmail(value)
+                }} autoCapitalize={'none'} autoCorrect={false} keyboardType='default' style={styles.textInput} placeholder='Email' />
+                <TextInput onChangeText={(value) => {
+                    setPassword(value)
+                }} autoCapitalize={'none'} autoCorrect={false} secureTextEntry={true} keyboardType='default' style={styles.textInput} placeholder='Пароль' />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() => {auth(true)}} style={styles.buttonTouch}>
+                    <TouchableOpacity onPress={() => {
+                        store.dispatch(login(email, password, navigation))
+                    }} style={styles.buttonTouch}>
                         <Text style={styles.buttonText}>Войти</Text>
                     </TouchableOpacity>
                 </View>
@@ -123,5 +139,16 @@ const styles = StyleSheet.create({
     signUp: {
         top: '17%',
         alignItems: 'center',
+    },
+    backButton: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        width: 50,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        backgroundColor: colors.SECOND_COLOR,
     }
 })

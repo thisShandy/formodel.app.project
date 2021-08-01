@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { 
@@ -18,6 +18,9 @@ import {
     Nunito_900Black,
     Nunito_900Black_Italic 
 } from '@expo-google-fonts/nunito'
+import { register } from '../../redux/actions'
+
+import { AuthContext } from '../../context/authContext'
 
 import { colors } from '../../theme/color'
 import AppLoading from 'expo-app-loading'
@@ -41,6 +44,13 @@ export default function LoginScreen({ navigation }) {
         Nunito_900Black_Italic 
     })
 
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const [ login, setLogin ] = useState('')
+    const [ phone, setPhone ] = useState('')
+
+    const { auth, store } = useContext(AuthContext)
+
     if (!fontsLoaded) {
         return <AppLoading />
     }
@@ -56,12 +66,22 @@ export default function LoginScreen({ navigation }) {
                     source={ require('../../img/logo-shadow-69CBF5.png') } 
                     style={styles.logo}
                 />
-                <TextInput autoCapitalize={'none'} autoCorrect={false} keyboardType='default' style={styles.textInput} placeholder='Логин' />
-                <TextInput autoCapitalize={'none'} autoCorrect={false} keyboardType='email-address' style={styles.textInput} placeholder='Электронная почта' />
-                <TextInput autoCapitalize={'none'} autoCorrect={false} keyboardType='phone-pad' style={styles.textInput} placeholder='Телефон' />
-                <TextInput autoCapitalize={'none'} autoCorrect={false} secureTextEntry={true} keyboardType='default' style={styles.textInput} placeholder='Пароль' />
+                <TextInput onChangeText={(value) => {
+                    setLogin(value)
+                }} autoCapitalize={'none'} autoCorrect={false} keyboardType='default' style={styles.textInput} placeholder='Логин' />
+                <TextInput onChangeText={(value) => {
+                    setEmail(value)
+                }} autoCapitalize={'none'} autoCorrect={false} keyboardType='email-address' style={styles.textInput} placeholder='Email' />
+                <TextInput onChangeText={(value) => {
+                    setPhone(value)
+                }} autoCapitalize={'none'} autoCorrect={false} keyboardType='phone-pad' style={styles.textInput} placeholder='Телефон' />
+                <TextInput onChangeText={(value) => {
+                    setPassword(value)
+                }} autoCapitalize={'none'} autoCorrect={false} secureTextEntry={true} keyboardType='default' style={styles.textInput} placeholder='Пароль' />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.buttonTouch}>
+                    <TouchableOpacity onPress={() => {
+                        store.dispatch(register(email, password, login, phone, navigation))
+                    }} style={styles.buttonTouch}>
                         <Text style={styles.buttonText}>Регистрация</Text>
                     </TouchableOpacity>
                 </View>
