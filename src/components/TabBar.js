@@ -26,7 +26,7 @@ export default function TabBar({ navigation }) {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => {
-                        if (store.getState()) {
+                        if (store.getState().isAuth) {
                             navigation.navigate('Cart')
                         } else {
                             navigation.navigate('Auth')

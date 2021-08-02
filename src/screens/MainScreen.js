@@ -3,6 +3,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import Firebase from '../firebase/firebase'
 
 import { AuthContext } from '../context/authContext'
 import { rootReducer } from '../redux/rootReducer'
@@ -15,11 +16,15 @@ export default function MainScreen() {
 
     const store = createStore( rootReducer, false, applyMiddleware(thunk) )
 
-    // useEffect(() => {
-    //     store.dispatch(initialize())
-    // }, [])
-
-    console.log(store.getState())
+    Firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log('logged')
+            store.dispatch(initialize(true))
+        } else {
+            console.log('unlogged')
+            store.dispatch(initialize(false))
+        }
+    })
 
     const Stack = createStackNavigator()
 

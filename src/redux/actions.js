@@ -29,17 +29,7 @@ export function register( email, password, login, phone, navigation ) {
     return { type: AUTH }
 }
 
-export function initialize() {
-    let payload 
-    Firebase.auth().onAuthStateChanged(function(user) {
-        console.log('мы здесь')
-        if (user) {
-            console.log('тут тру')
-            payload = true
-        } else {
-            console.log('тут фолс')
-            payload = false
-        }
-      })
-    dispatch({ type: INIT, payload: payload })
+export function initialize(payload) {
+    console.log(payload)
+    return { type: INIT, payload }
 }
