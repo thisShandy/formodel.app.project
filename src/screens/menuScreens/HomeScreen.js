@@ -60,9 +60,15 @@ export default function HomeScreen({ navigation }) {
         setGips(snapshot.docs.map(doc => doc.data()))
     }
 
+    async function loadForms() {
+        const snapshot = await Firebase.firestore().collection('categories').doc('forms').collection('products').get()
+        setForms(snapshot.docs.map(doc => doc.data()))
+    }
+
     useEffect(() => {
         loadSilicone()
         loadGips()
+        loadForms()
     }, [])
 
     if(!fontsLoaded) {
@@ -103,7 +109,9 @@ export default function HomeScreen({ navigation }) {
                                     }) : pageName === 1 ?
                                     gips.map((product) => {
                                         return <ProductCard key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
-                                    }) : null
+                                    }) : forms.map((product) => {
+                                        return <ProductCard key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
+                                    })
                                 }
                             </ScrollView>
                         </View>
@@ -119,7 +127,9 @@ export default function HomeScreen({ navigation }) {
                                     }) : pageName === 1 ?
                                     gips.filter((product) => product.best === true).map((product) => {
                                         return <ProductCard type='mini' key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
-                                    }) : null
+                                    }) : forms.filter((product) => product.best === true).map((product) => {
+                                        return <ProductCard type='mini' key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
+                                    })
                                 }
                             </ScrollView>
                         </View>
