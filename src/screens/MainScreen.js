@@ -18,10 +18,8 @@ export default function MainScreen() {
 
     Firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log('logged')
             store.dispatch(initialize(true))
         } else {
-            console.log('unlogged')
             store.dispatch(initialize(false))
         }
     })

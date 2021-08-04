@@ -30,6 +30,5 @@ export function register( email, password, login, phone, navigation ) {
 }
 
 export function initialize(payload) {
-    console.log(payload)
     return { type: INIT, payload }
 }

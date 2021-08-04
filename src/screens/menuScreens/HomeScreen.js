@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView} from 'react-native'
 import TabBar from '../../components/TabBar'
 import AppLoading from 'expo-app-loading'
@@ -19,12 +19,19 @@ import {
     Nunito_900Black,
     Nunito_900Black_Italic 
 } from '@expo-google-fonts/nunito'
+import Firebase from '../../firebase/firebase'
 
 import ProductCard from '../../components/ProductCard'
 
 import { colors } from '../../theme/color'
 
 export default function HomeScreen({ navigation }) {
+
+    const [ silicone, setSilicone ] = useState([])
+    const [ gips, setGips ] = useState([])
+    const [ forms, setForms ] = useState([])
+    const [ pageName, setPageName ] = useState(0)
+    const [ productCollection, setProductCollection ] = useState('silicone')
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -43,6 +50,21 @@ export default function HomeScreen({ navigation }) {
         Nunito_900Black_Italic 
     })
 
+    async function loadSilicone() {
+        const snapshot = await Firebase.firestore().collection('categories').doc('silicone').collection('products').get()
+        setSilicone(snapshot.docs.map(doc => doc.data()))
+    }
+
+    async function loadGips() {
+        const snapshot = await Firebase.firestore().collection('categories').doc('gips').collection('products').get()
+        setGips(snapshot.docs.map(doc => doc.data()))
+    }
+
+    useEffect(() => {
+        loadSilicone()
+        loadGips()
+    }, [])
+
     if(!fontsLoaded) {
         return <AppLoading />
     } else {
@@ -54,24 +76,35 @@ export default function HomeScreen({ navigation }) {
                     <View style={styles.contentContainer}>
                         <Text style={styles.sloganText}>Материалы для форм</Text>
                         <View style={styles.containerMenu}>
-                            <TouchableOpacity style={styles.menuButton}>
-                                <Text style={styles.menuButtonText}>Силиконы</Text>
+                            <TouchableOpacity onPress={() => {
+                                setPageName(0)
+                            }} style={[styles.menuButton, { borderBottomWidth: pageName === 0 ? 2 : 0 }]}>
+                                <Text style={[styles.menuButtonText, { color: pageName === 0 ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Силиконы</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.menuButton,  { borderBottomWidth: 0 }]}>
-                                <Text style={[styles.menuButtonText, {color: colors.BACKGROUND_COLOR}]}>Гипс</Text>
+                            <TouchableOpacity onPress={() => {
+                                setPageName(1)
+                            }} style={[styles.menuButton,  { borderBottomWidth: pageName === 1 ? 2 : 0 }]}>
+                                <Text style={[styles.menuButtonText, { color: pageName === 1 ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Гипс</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.menuButton, { borderBottomWidth: 0 }]}>
-                                <Text style={[styles.menuButtonText, {color: colors.BACKGROUND_COLOR}]}>Формы</Text>
+                            <TouchableOpacity onPress={() => {
+                                setPageName(2)
+                            }} style={[styles.menuButton, { borderBottomWidth: pageName === 2 ? 2 : 0 }]}>
+                                <Text style={[styles.menuButtonText, { color: pageName === 2 ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Формы</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                     
                         <View style={styles.productContainer}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                <ProductCard name='Super Mold' cost={35} image={ {uri: 'https://crimea-soap.ru/images/cms/thumbs/5ea04cc151ac4cf20679e476db6a55c2f7da87f9/img_7885_auto_auto.jpg'} } />
-                                <ProductCard name='Rebound 25' cost={60} image={ {uri: 'https://images.by.prom.st/197156058_w600_h600_197156058.jpg'} } />
-                                <ProductCard name='Mold Star 16' cost={75} image={ {uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYGnntMG78QB4xZw1gZukd0zE2ZFUU0wRUPg&usqp=CAU'} } />
-                                <ProductCard name='Platinum' cost={50} image={ {uri: 'https://lh3.googleusercontent.com/proxy/4R8DxzNn_c5yziwBUnAAiSKMnn9_lliekQSUa6vmTyh2MUjlG0w9z6o1lgdEtkEv1j54uQpyNKtOdGanR4W_W8IEKQXmzuJB3GVSwHcbQOyusjf9cpYr4po0HA'} } />
+                                {
+                                    pageName === 0 ?
+                                    silicone.map((product) => {
+                                        return <ProductCard key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
+                                    }) : pageName === 1 ?
+                                    gips.map((product) => {
+                                        return <ProductCard key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
+                                    }) : null
+                                }
                             </ScrollView>
                         </View>
                         <View style={styles.contentContainer}>
@@ -79,8 +112,15 @@ export default function HomeScreen({ navigation }) {
                         </View>
                         <View style={[styles.productContainer, {marginVertical: 25}]}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                <ProductCard type='mini' name='Mold Star 16' cost={75} image={ {uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYGnntMG78QB4xZw1gZukd0zE2ZFUU0wRUPg&usqp=CAU'} } />
-                                <ProductCard type='mini' name='Rebound 25' cost={60} image={ {uri: 'https://images.by.prom.st/197156058_w600_h600_197156058.jpg'} } />
+                                {
+                                    pageName === 0 ?
+                                    silicone.filter((product) => product.best === true).map((product) => {
+                                        return <ProductCard type='mini' key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
+                                    }) : pageName === 1 ?
+                                    gips.filter((product) => product.best === true).map((product) => {
+                                        return <ProductCard type='mini' key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
+                                    }) : null
+                                }
                             </ScrollView>
                         </View>
                     </ScrollView>

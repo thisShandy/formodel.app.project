@@ -6,7 +6,6 @@ export function rootReducer( state = { isAuth: false }, action ) {
             return state = { isAuth: true }
             break
         case INIT:
-            console.log(action.payload)
             return state = { isAuth: action.payload }
             break
         default:

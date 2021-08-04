@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native'
 import TabBar from '../../components/TabBar'
 import AppLoading from 'expo-app-loading'
@@ -19,12 +19,15 @@ import {
     Nunito_900Black,
     Nunito_900Black_Italic 
 } from '@expo-google-fonts/nunito'
+import Firebase from '../../firebase/firebase'
 
 import CategoryCard from '../../components/CategoryCard'
 
 import { colors } from '../../theme/color'
 
 export default function ShopScreen({ navigation }) {
+
+    const [ categories, setLoadCategories ] = useState([])
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -43,6 +46,15 @@ export default function ShopScreen({ navigation }) {
         Nunito_900Black_Italic 
     })
 
+    async function loadCategories() {
+        const snapshot = await Firebase.firestore().collection('categories').get()
+        setLoadCategories(snapshot.docs.map(doc => doc.data()))
+    }
+
+    useEffect(() => {
+        loadCategories()
+    }, [])
+
     if(!fontsLoaded) {
         return <AppLoading />
     } else {
@@ -53,14 +65,13 @@ export default function ShopScreen({ navigation }) {
                     <View style={styles.containerContent}>
                         <Text style={styles.titleText}>Категории</Text>
                         <ScrollView showsVerticalScrollIndicator={false} style={styles.containerScroll}>
-                            <CategoryCard name='Силиконы' />
-                            <CategoryCard name='Гипс' />
-                            <CategoryCard name='Формы' />
-                            <CategoryCard name='Кисти' />
-                            <CategoryCard name='Краски' />
-                            <CategoryCard name='Разделительные смазки' />
-                            <CategoryCard name='Полимерная глина' />
-                            <CategoryCard name='Мыловарение' />
+                            {
+                                categories.map((category) => {
+                                    return (
+                                        <CategoryCard name={category.name} />
+                                    )
+                                })
+                            }
                         </ScrollView>
                     </View>
                 </ImageBackground>

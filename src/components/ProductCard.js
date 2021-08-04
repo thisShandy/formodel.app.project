@@ -48,7 +48,7 @@ export default function ProductCard({ type='default', name='Product', cost=10, i
                 <View style={ type != 'mini' ? styles.container : styles.containerMini }>
                     <Image style={ type != 'mini' ? styles.productImage : styles.productImageMini } source={ image } />
                     <View style={ type != 'mini' ? styles.textContainer : styles.textContainerMini }>
-                        <Text style={ type != 'mini' ? styles.textName : styles.textNameMini} >{name}</Text>
+                        <Text numberOfLines={1} style={ type != 'mini' ? styles.textName : styles.textNameMini} >{name}</Text>
                         <Text style={ type != 'mini' ? styles.textCost : styles.textCostMini} >{cost}р</Text>
                     </View>   
                 </View>
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
     },
     productImage: {
         alignSelf: 'flex-end',
-        width: 100,
-        height: 100,
+        width: 105,
+        height: 105,
         marginRight: 15,
         marginTop: 20,
         borderRadius: 10,
@@ -106,11 +106,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     textName: {
+        width: 155,
         fontFamily: 'Nunito_800ExtraBold',
         color: colors.SECOND_COLOR,
         fontSize: 20,
     },
     textNameMini: {
+        width: 140,
         fontFamily: 'Nunito_800ExtraBold',
         color: colors.SECOND_COLOR,
         fontSize: 17,
