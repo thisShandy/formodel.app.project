@@ -25,8 +25,6 @@ import { colors } from '../../theme/color'
 
 export default function ProfileScreen({ navigation }) {
 
-    const [ user, setUser ] = useState({})
-
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
         Nunito_200ExtraLight_Italic,
@@ -44,56 +42,13 @@ export default function ProfileScreen({ navigation }) {
         Nunito_900Black_Italic 
     })
 
-    async function getUser() {
-        await Firebase.firestore().collection('users').doc(Firebase.auth().currentUser.uid.toString()).get()
-        .then((doc) => {
-            if (doc.exists) {
-                setUser(
-                    {
-                        name: doc.data().login,
-                        email: doc.data().email,
-                        phone: doc.data().phone,
-                    }
-                )
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        })
-    }
-
-    useEffect(() => {
-        getUser()
-    }, [])
-
-    user.phone = user.phone.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, "$1-$2-$3-$4-$5")
-
     if(!fontsLoaded) {
         return <AppLoading />
     } else {
         return (
             <View style={styles.container}>
                 <ImageBackground style={styles.containerBackgroundImage} source={ require( '../../img/background-image-second.jpg' ) } >
-                    <View style={styles.contentContainer}>
-
-                        <View style={styles.mainContentContainer}>
-
-                            <Image style={styles.logoImage} source={ require( '../../img/white-logo.png')} />
-
-                            <View style={styles.mainInformation}>
-                                <Text style={[styles.mainInformationText, {fontFamily: 'Nunito_800ExtraBold', fontSize: 20,}]}>{ user.name }</Text>
-                                <Text style={styles.mainInformationText}>{ user.email }</Text>
-                                <Text style={styles.mainInformationText}>{ user.phone }</Text>
-                            </View>
-
-                        </View>
-                        <TouchableOpacity style={styles.changeButton}>
-                            <Text style={styles.changeButtonText}>Изменить</Text>
-                        </TouchableOpacity>
-                        
-                    </View>
+                    <TabBar navigation={ navigation.navigate('Search') } />
                 </ImageBackground>
             </View>
         )

@@ -66,9 +66,9 @@ export default function ShopScreen({ navigation }) {
                         <Text style={styles.titleText}>Категории</Text>
                         <ScrollView showsVerticalScrollIndicator={false} style={styles.containerScroll}>
                             {
-                                categories.map((category) => {
+                                categories.reverse().map((category) => {
                                     return (
-                                        <CategoryCard name={category.name} />
+                                        <CategoryCard key={category.key} name={category.name} navigation={ navigation } />
                                     )
                                 })
                             }
