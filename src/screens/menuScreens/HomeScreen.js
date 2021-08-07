@@ -27,11 +27,8 @@ import { colors } from '../../theme/color'
 
 export default function HomeScreen({ navigation }) {
 
-    const [ silicone, setSilicone ] = useState([])
-    const [ gips, setGips ] = useState([])
-    const [ forms, setForms ] = useState([])
-    const [ pageName, setPageName ] = useState(0)
-    const [ productCollection, setProductCollection ] = useState('silicone')
+    const [ pageName, setPageName ] = useState('silicone')
+    const [ data, setData ] = useState([])
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -50,26 +47,14 @@ export default function HomeScreen({ navigation }) {
         Nunito_900Black_Italic 
     })
 
-    async function loadSilicone() {
-        const snapshot = await Firebase.firestore().collection('categories').doc('silicone').collection('products').get()
-        setSilicone(snapshot.docs.map(doc => doc.data()))
-    }
-
-    async function loadGips() {
-        const snapshot = await Firebase.firestore().collection('categories').doc('gips').collection('products').get()
-        setGips(snapshot.docs.map(doc => doc.data()))
-    }
-
-    async function loadForms() {
-        const snapshot = await Firebase.firestore().collection('categories').doc('forms').collection('products').get()
-        setForms(snapshot.docs.map(doc => doc.data()))
+    async function loadData() {
+        const snapshot = await Firebase.firestore().collection('categories').doc(pageName).collection('products').get()
+        setData(snapshot.docs.map(doc => doc.data()))
     }
 
     useEffect(() => {
-        loadSilicone()
-        loadGips()
-        loadForms()
-    }, [])
+        loadData()
+    }, [pageName])
 
     if(!fontsLoaded) {
         return <AppLoading />
@@ -83,19 +68,19 @@ export default function HomeScreen({ navigation }) {
                         <Text style={styles.sloganText}>Материалы для форм</Text>
                         <View style={styles.containerMenu}>
                             <TouchableOpacity onPress={() => {
-                                setPageName(0)
-                            }} style={[styles.menuButton, { borderBottomWidth: pageName === 0 ? 2 : 0 }]}>
-                                <Text style={[styles.menuButtonText, { color: pageName === 0 ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Силиконы</Text>
+                                setPageName('silicone')
+                            }} style={[styles.menuButton, { borderBottomWidth: pageName === 'silicone' ? 2 : 0 }]}>
+                                <Text style={[styles.menuButtonText, { color: pageName === 'silicone' ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Силиконы</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
-                                setPageName(1)
-                            }} style={[styles.menuButton,  { borderBottomWidth: pageName === 1 ? 2 : 0 }]}>
-                                <Text style={[styles.menuButtonText, { color: pageName === 1 ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Гипс</Text>
+                                setPageName('gips')
+                            }} style={[styles.menuButton,  { borderBottomWidth: pageName === 'gips' ? 2 : 0 }]}>
+                                <Text style={[styles.menuButtonText, { color: pageName === 'gips' ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Гипс</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
-                                setPageName(2)
-                            }} style={[styles.menuButton, { borderBottomWidth: pageName === 2 ? 2 : 0 }]}>
-                                <Text style={[styles.menuButtonText, { color: pageName === 2 ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Формы</Text>
+                                setPageName('forms')
+                            }} style={[styles.menuButton, { borderBottomWidth: pageName === 'forms' ? 2 : 0 }]}>
+                                <Text style={[styles.menuButtonText, { color: pageName === 'forms' ? colors.SECOND_COLOR : colors.BACKGROUND_COLOR }]}>Формы</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -103,13 +88,7 @@ export default function HomeScreen({ navigation }) {
                         <View style={styles.productContainer}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 {
-                                    pageName === 0 ?
-                                    silicone.map((product) => {
-                                        return <ProductCard key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
-                                    }) : pageName === 1 ?
-                                    gips.map((product) => {
-                                        return <ProductCard key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
-                                    }) : forms.map((product) => {
+                                    data.map((product) => {
                                         return <ProductCard key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
                                     })
                                 }
@@ -121,13 +100,7 @@ export default function HomeScreen({ navigation }) {
                         <View style={[styles.productContainer, {marginVertical: 25}]}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 {
-                                    pageName === 0 ?
-                                    silicone.filter((product) => product.best === true).map((product) => {
-                                        return <ProductCard type='mini' key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
-                                    }) : pageName === 1 ?
-                                    gips.filter((product) => product.best === true).map((product) => {
-                                        return <ProductCard type='mini' key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
-                                    }) : forms.filter((product) => product.best === true).map((product) => {
+                                    data.filter((product) => product.best === true).map((product) => {
                                         return <ProductCard type='mini' key={product.key} name={product.name} cost={product.cost} image={ {uri: product.image} } />
                                     })
                                 }

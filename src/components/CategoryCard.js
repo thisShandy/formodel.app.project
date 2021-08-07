@@ -21,7 +21,7 @@ import {
 
 import { colors } from '../theme/color'
 
-export default function CategoryCard({ name='Продукция' }) {
+export default function CategoryCard({ name='Продукция', navigation }) {
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -44,7 +44,7 @@ export default function CategoryCard({ name='Продукция' }) {
         return <AppLoading />
     } else {
         return (
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity onPress={() => navigation.navigate('Catalog')} style={styles.container}>
                 <Text style={styles.textTitle}>{ name }</Text>
             </TouchableOpacity>
         )

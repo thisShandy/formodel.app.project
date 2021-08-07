@@ -23,7 +23,7 @@ import Firebase from '../../firebase/firebase'
 
 import { colors } from '../../theme/color'
 
-export default function ProfileScreen({ navigation }) {
+export default function CatalogScreen({ navigation }) {
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -48,7 +48,7 @@ export default function ProfileScreen({ navigation }) {
         return (
             <View style={styles.container}>
                 <ImageBackground style={styles.containerBackgroundImage} source={ require( '../../img/background-image-second.jpg' ) } >
-                    <TabBar navigation={ navigation.navigate('Search') } />
+                    
                 </ImageBackground>
             </View>
         )

@@ -52,9 +52,10 @@ export default function ProfileScreen({ navigation }) {
                     {
                         name: doc.data().login,
                         email: doc.data().email,
-                        phone: doc.data().phone,
+                        phone: doc.data().phone.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, "$1-$2-$3-$4-$5"),
                     }
                 )
+                
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
@@ -67,9 +68,7 @@ export default function ProfileScreen({ navigation }) {
     useEffect(() => {
         getUser()
     }, [])
-
-    user.phone = user.phone.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, "$1-$2-$3-$4-$5")
-
+    
     if(!fontsLoaded) {
         return <AppLoading />
     } else {

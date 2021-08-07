@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
 import TabBar from '../../components/TabBar'
+import CategoryCard from '../../components/CategoryCard'
 import AppLoading from 'expo-app-loading'
 import { 
     useFonts,
@@ -21,13 +22,11 @@ import {
 } from '@expo-google-fonts/nunito'
 import Firebase from '../../firebase/firebase'
 
-import CategoryCard from '../../components/CategoryCard'
-
 import { colors } from '../../theme/color'
 
 export default function ShopScreen({ navigation }) {
 
-    const [ categories, setLoadCategories ] = useState([])
+    const [ data, setData ] = useState([])
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -48,7 +47,7 @@ export default function ShopScreen({ navigation }) {
 
     async function loadCategories() {
         const snapshot = await Firebase.firestore().collection('categories').get()
-        setLoadCategories(snapshot.docs.map(doc => doc.data()))
+        setData(snapshot.docs.map(doc => doc.data()))
     }
 
     useEffect(() => {
@@ -66,9 +65,9 @@ export default function ShopScreen({ navigation }) {
                         <Text style={styles.titleText}>Категории</Text>
                         <ScrollView showsVerticalScrollIndicator={false} style={styles.containerScroll}>
                             {
-                                categories.reverse().map((category) => {
+                                data.reverse().map((category) => {
                                     return (
-                                        <CategoryCard key={category.key} name={category.name} navigation={ navigation } />
+                                        <CategoryCard key={category.key} name={category.name} navigation={navigation} />
                                     )
                                 })
                             }

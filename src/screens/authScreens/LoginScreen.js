@@ -27,6 +27,11 @@ import { colors } from '../../theme/color'
 
 export default function LoginScreen({ navigation }) {
 
+    const [ data, setData ] = useState({
+        email: '',
+        password: '',
+    })
+
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
         Nunito_200ExtraLight_Italic,
@@ -43,9 +48,6 @@ export default function LoginScreen({ navigation }) {
         Nunito_900Black,
         Nunito_900Black_Italic 
     })
-
-    const [ email, setEmail ] = useState('')
-    const [ password, setPassword ] = useState('')
 
     const { store } = useContext(AuthContext)
 
@@ -64,14 +66,20 @@ export default function LoginScreen({ navigation }) {
                     style={styles.logo}
                 />
                 <TextInput onChangeText={(value) => {
-                    setEmail(value)
+                    setData({
+                        ... data,
+                        email: value,
+                    })
                 }} autoCapitalize={'none'} autoCorrect={false} keyboardType='default' style={styles.textInput} placeholder='Email' />
                 <TextInput onChangeText={(value) => {
-                    setPassword(value)
+                    setData({
+                        ... data,
+                        password: value,
+                    })
                 }} autoCapitalize={'none'} autoCorrect={false} secureTextEntry={true} keyboardType='default' style={styles.textInput} placeholder='Пароль' />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={() => {
-                        store.dispatch(login(email, password, navigation))
+                        store.dispatch(login(data.email, data.password, navigation))
                     }} style={styles.buttonTouch}>
                         <Text style={styles.buttonText}>Войти</Text>
                     </TouchableOpacity>
