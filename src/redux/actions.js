@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Firebase from '../firebase/firebase'
-import { AUTH, INIT } from './types'
+import { AUTH, INIT, SET_CATEGORY } from './types'
 
 export function login( email, password, navigation ) {
     Firebase.auth()
@@ -31,4 +31,8 @@ export function register( email, password, login, phone, navigation ) {
 
 export function initialize(payload) {
     return { type: INIT, payload }
+}
+
+export function category(payload) {
+    return { type: SET_CATEGORY, payload }
 }

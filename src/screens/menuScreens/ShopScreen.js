@@ -67,7 +67,7 @@ export default function ShopScreen({ navigation }) {
                             {
                                 data.reverse().map((category) => {
                                     return (
-                                        <CategoryCard key={category.key} name={category.name} navigation={navigation} />
+                                        <CategoryCard key={category.key} name={category.name} categoryName={category.category} navigation={navigation} />
                                     )
                                 })
                             }

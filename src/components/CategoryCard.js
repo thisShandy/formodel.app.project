@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import AppLoading from 'expo-app-loading'
 import { 
@@ -18,10 +18,14 @@ import {
     Nunito_900Black,
     Nunito_900Black_Italic 
 } from '@expo-google-fonts/nunito'
+import { AuthContext } from '../context/authContext'
+import { category } from '../redux/actions'
 
 import { colors } from '../theme/color'
 
-export default function CategoryCard({ name='Продукция', navigation }) {
+export default function CategoryCard({ name='Продукция', categoryName, navigation }) {
+
+    const { store } = useContext(AuthContext)
 
     let [fontsLoaded] = useFonts({
         Nunito_200ExtraLight,
@@ -40,11 +44,16 @@ export default function CategoryCard({ name='Продукция', navigation }) 
         Nunito_900Black_Italic 
     })
 
+    function toCatalog() {
+        store.dispatch(category({categoryName, name}))
+        navigation.navigate('Catalog')
+    }
+
     if(!fontsLoaded) {
         return <AppLoading />
     } else {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('Catalog')} style={styles.container}>
+            <TouchableOpacity onPress={toCatalog} style={styles.container}>
                 <Text style={styles.textTitle}>{ name }</Text>
             </TouchableOpacity>
         )
